@@ -3,289 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>美甲預約 — Liz's Pass</title>
+<title>集點卡系統 — Liz's Pass</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 :root{--bg:#f0ebe0;--dark:#111;--mid:#555;--soft:#aaa;--line:rgba(0,0,0,0.1);}
 html,body{background:var(--bg);}
-body{min-height:100vh;font-family:-apple-system,"SF Pro Text","PingFang TC",sans-serif;display:flex;justify-content:center;padding:0 0 80px;}
+body{min-height:100vh;font-family:-apple-system,"SF Pro Text","PingFang TC",sans-serif;display:flex;justify-content:center;}
 .wrap{width:100%;max-width:430px;}
-
 nav{display:flex;align-items:center;justify-content:space-between;padding:52px 24px 0;}
-.back{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dark);text-decoration:none;}
+.back{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dark);text-decoration:none;display:flex;align-items:center;gap:8px;}
 .nav-logo{font-size:13px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--dark);}
-
-/* HERO */
-.hero{padding:40px 24px 28px;}
-.hero-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:16px;}
-.hero h1{font-size:44px;font-weight:900;line-height:0.95;letter-spacing:-2px;text-transform:uppercase;color:var(--dark);margin-bottom:8px;}
-.hero-sub{font-size:13px;color:var(--mid);margin-top:16px;border-left:2px solid var(--dark);padding-left:14px;line-height:1.7;}
-
-/* STAMP */
-.stamp-section{padding:28px 24px;}
-.s-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
-.s-count{font-size:11px;font-weight:700;color:var(--dark);}
-.stamps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:16px;}
-.stamp{aspect-ratio:1;border-radius:50%;border:1.5px solid var(--line);background:transparent;display:flex;align-items:center;justify-content:center;transition:all 0.3s cubic-bezier(.34,1.4,.64,1);}
-.stamp.used{background:var(--dark);border-color:var(--dark);}
-.stamp.used::after{content:'💅';font-size:13px;}
-.stamp:not(.used)::after{content:'';display:block;width:6px;height:6px;border-radius:50%;background:var(--line);}
-.prog-row{display:flex;align-items:center;gap:12px;}
-.prog-bg{flex:1;height:2px;background:var(--line);overflow:hidden;}
-.prog-fill{height:100%;background:var(--dark);transition:width 0.7s ease;}
-.prog-txt{font-size:11px;font-weight:700;color:var(--dark);letter-spacing:0.06em;}
-
+.hero{padding:48px 24px 32px;}
+.hero-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:20px;}
+.hero h1{font-size:48px;font-weight:900;line-height:0.95;letter-spacing:-2px;text-transform:uppercase;color:var(--dark);margin-bottom:24px;}
+.hero-sub{font-size:13px;color:var(--mid);line-height:1.75;border-left:2px solid var(--dark);padding-left:14px;}
 .divider{height:1px;background:var(--line);margin:0 24px;}
-
-/* BOOK BTN */
-.book-wrap{padding:24px;}
-.book-btn{width:100%;padding:18px;background:var(--dark);color:var(--bg);font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;border:none;cursor:pointer;font-family:inherit;transition:opacity 0.15s;}
-.book-btn:active{opacity:0.75;}
-
-/* STEPS */
-#stepsView{display:none;}
-.step{display:none;animation:fadeUp 0.25s ease both;}
-.step.active{display:block;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-
-.step-wrap{padding:24px;}
-.s-hdr{margin-bottom:24px;}
-.s-num{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:6px;}
-.s-ttl{font-size:22px;font-weight:900;letter-spacing:-0.5px;text-transform:uppercase;color:var(--dark);}
-
-.field{margin-bottom:18px;}
-.field label{display:block;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;}
-.field input,.field textarea{width:100%;padding:14px 0;border:none;border-bottom:1.5px solid var(--dark);background:transparent;font-size:15px;color:var(--dark);outline:none;font-family:inherit;border-radius:0;}
-.field textarea{height:80px;resize:none;line-height:1.65;padding-top:10px;}
-
-.opt-grid{display:grid;gap:1px;background:var(--line);}
-.opt-grid.c2{grid-template-columns:1fr 1fr;}
-.opt-grid.c3{grid-template-columns:1fr 1fr 1fr;}
-.opt{background:var(--bg);padding:16px 12px;text-align:center;cursor:pointer;transition:background 0.15s;}
-.opt.sel{background:var(--dark);}
-.opt.sel .opt-lbl,.opt.sel .opt-sub{color:var(--bg);}
-.opt-ico{font-size:20px;display:block;margin-bottom:8px;}
-.opt-lbl{font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--dark);}
-.opt-sub{font-size:10px;color:var(--soft);margin-top:3px;}
-
-.slider-val{font-size:32px;font-weight:900;letter-spacing:-1px;color:var(--dark);margin-bottom:20px;}
-input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:2px;background:var(--dark);outline:none;cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--bg);border:2px solid var(--dark);}
-.slider-marks{display:flex;justify-content:space-between;margin-top:10px;font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--soft);}
-
-.sum-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
-.sum-row:last-child{border-bottom:none;}
-.sum-row .k{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);}
-.sum-row .v{font-size:13px;font-weight:700;color:var(--dark);}
-
-.nav{display:flex;gap:12px;margin-top:28px;}
-.btn-back{flex:0 0 auto;padding:16px 20px;background:transparent;border:1.5px solid var(--dark);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dark);cursor:pointer;font-family:inherit;transition:0.15s;}
-.btn-next{flex:1;padding:16px;background:var(--dark);color:var(--bg);font-size:11px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;border:none;cursor:pointer;font-family:inherit;transition:opacity 0.15s;}
-.btn-next:active{opacity:0.75;}
-
-/* SUCCESS */
-#successPage{display:none;}
-#successPage.show{display:block;}
-.suc-wrap{padding:40px 24px;}
-.suc-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:20px;}
-.suc-title{font-size:40px;font-weight:900;line-height:0.95;letter-spacing:-1.5px;text-transform:uppercase;color:var(--dark);margin-bottom:24px;}
-.suc-msg{font-size:13px;color:var(--mid);line-height:1.75;border-left:2px solid var(--dark);padding-left:14px;margin-bottom:32px;}
-.suc-summary{border-top:1px solid var(--line);}
-.book-btn-wrap{padding:0 24px 24px;}
-
-.petals{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;overflow:hidden;}
-.petal{position:absolute;top:-40px;animation:fall linear forwards;}
-@keyframes fall{0%{opacity:1;transform:translateY(0) rotate(0);}100%{opacity:0;transform:translateY(110vh) rotate(360deg);}}
-
-.sending{display:none;position:fixed;inset:0;background:rgba(240,235,224,0.9);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
-.sending.show{display:flex;}
-.spinner{width:32px;height:32px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--dark);animation:spin 0.65s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.sending p{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);}
+.section-head{padding:28px 24px 16px;}
+.section-title{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);}
+.svc-list{padding:0 24px;}
+.svc-item{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid var(--line);text-decoration:none;cursor:pointer;transition:opacity 0.15s;}
+.svc-item:active{opacity:0.6;}
+.svc-item.locked{cursor:default;}
+.svc-item.locked:active{opacity:1;}
+.svc-left{display:flex;align-items:center;gap:16px;}
+.svc-ico{font-size:22px;width:36px;text-align:center;}
+.svc-name{font-size:14px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark);margin-bottom:3px;}
+.svc-item.locked .svc-name{color:var(--soft);}
+.svc-desc{font-size:11px;color:var(--soft);}
+.svc-tag{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);padding:3px 8px;border-radius:3px;}
+.svc-arr{font-size:14px;color:var(--dark);}
+.cs-wrap{padding:24px;}
+.cs-box{border:1px solid var(--line);padding:28px 24px;text-align:center;}
+.cs-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;}
+.cs-text{font-size:16px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--dark);line-height:1.5;}
+.cs-text em{font-style:normal;display:block;font-size:11px;font-weight:600;color:var(--soft);letter-spacing:0.1em;margin-top:6px;}
+footer{padding:32px 24px;border-top:1px solid var(--line);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);}
 </style>
 </head>
 <body>
 <div class="wrap">
   <nav>
-    <a class="back" href="pass.html">← 返回</a>
+    <a class="back" href="index.html">← 首頁</a>
     <span class="nav-logo">LIZ</span>
   </nav>
-
-  <div id="mainView">
-    <div class="hero">
-      <div class="hero-label">Nail Pass — 專屬集點卡</div>
-      <h1>MAKE IT<br>PRETTY</h1>
-      <p class="hero-sub">變漂亮喔</p>
+  <div class="hero">
+    <div class="hero-label">專屬集點卡系統</div>
+    <h1>選擇<br>服務</h1>
+    <p class="hero-sub">選擇你想要預約的服務，我會幫你安排好一切</p>
+  </div>
+  <div class="divider"></div>
+  <div class="section-head"><span class="section-title">服務項目</span></div>
+  <div class="svc-list">
+    <a class="svc-item open" href="nail.html">
+      <div class="svc-left"><span class="svc-ico">💅</span><div><div class="svc-name">美甲預約</div><div class="svc-desc">專屬集點卡 · 12 次可使用</div></div></div>
+      <span class="svc-arr">→</span>
+    </a>
+    <div class="svc-item locked" onclick="showComing()">
+      <div class="svc-left"><span class="svc-ico">💇‍♀️</span><div><div class="svc-name">美髮</div><div class="svc-desc">造型剪髮 · 染髮燙髮</div></div></div>
+      <span class="svc-tag">即將開放</span>
     </div>
-
-    <div class="divider"></div>
-
-    <div class="stamp-section">
-      <div class="s-label">
-        <span>集點進度</span>
-        <span class="s-count" id="countLabel">讀取中</span>
-      </div>
-      <div class="stamps" id="stamps"></div>
-      <div class="prog-row">
-        <div class="prog-bg"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-        <div class="prog-txt" id="progTxt">—</div>
-      </div>
+    <div class="svc-item locked" onclick="showComing()">
+      <div class="svc-left"><span class="svc-ico">💆‍♀️</span><div><div class="svc-name">按摩</div><div class="svc-desc">全身放鬆 · 舒壓療程</div></div></div>
+      <span class="svc-tag">即將開放</span>
     </div>
-
-    <div class="divider"></div>
-
-    <div class="book-wrap">
-      <button class="book-btn" onclick="startBooking()">立即預約 →</button>
+    <div class="svc-item locked" onclick="showComing()">
+      <div class="svc-left"><span class="svc-ico">✈️</span><div><div class="svc-name">出遊約會</div><div class="svc-desc">約會行程 · 旅遊規劃</div></div></div>
+      <span class="svc-tag">即將開放</span>
     </div>
   </div>
-
-  <div id="stepsView">
-    <div class="step" id="step1">
-      <div class="step-wrap">
-        <div class="s-hdr"><div class="s-num">Step 01</div><div class="s-ttl">日期 & 時間</div></div>
-        <div class="field"><label>日期</label><input type="date" id="iDate"></div>
-        <div class="field"><label>時間</label><input type="time" id="iTime" value="14:00"></div>
-        <div class="nav"><button class="btn-back" onclick="cancelBooking()">✕ 取消</button><button class="btn-next" onclick="goStep(2)">下一步 →</button></div>
-      </div>
-    </div>
-    <div class="step" id="step2">
-      <div class="step-wrap">
-        <div class="s-hdr"><div class="s-num">Step 02</div><div class="s-ttl">指甲長度</div></div>
-        <div class="opt-grid c3">
-          <div class="opt" data-v="短甲" onclick="pick(this,'len')"><span class="opt-ico">🤏</span><div class="opt-lbl">短甲</div><div class="opt-sub">俐落</div></div>
-          <div class="opt" data-v="中甲" onclick="pick(this,'len')"><span class="opt-ico">✋</span><div class="opt-lbl">中甲</div><div class="opt-sub">百搭</div></div>
-          <div class="opt" data-v="長甲" onclick="pick(this,'len')"><span class="opt-ico">💅</span><div class="opt-lbl">長甲</div><div class="opt-sub">優雅</div></div>
-        </div>
-        <div class="nav" style="margin-top:24px;"><button class="btn-back" onclick="goStep(1)">← 上一步</button><button class="btn-next" onclick="goStep(3)">下一步 →</button></div>
-      </div>
-    </div>
-    <div class="step" id="step3">
-      <div class="step-wrap">
-        <div class="s-hdr"><div class="s-num">Step 03</div><div class="s-ttl">款式風格</div></div>
-        <div class="opt-grid c2">
-          <div class="opt" data-v="純色凝膠" onclick="pick(this,'style')"><span class="opt-ico">🌸</span><div class="opt-lbl">純色凝膠</div></div>
-          <div class="opt" data-v="法式" onclick="pick(this,'style')"><span class="opt-ico">🤍</span><div class="opt-lbl">法式</div></div>
-          <div class="opt" data-v="韓系簡約" onclick="pick(this,'style')"><span class="opt-ico">🍂</span><div class="opt-lbl">韓系簡約</div></div>
-          <div class="opt" data-v="日系文青" onclick="pick(this,'style')"><span class="opt-ico">🌿</span><div class="opt-lbl">日系文青</div></div>
-          <div class="opt" data-v="客製設計" onclick="pick(this,'style')"><span class="opt-ico">✨</span><div class="opt-lbl">客製設計</div></div>
-          <div class="opt" data-v="亮片珠光" onclick="pick(this,'style')"><span class="opt-ico">💫</span><div class="opt-lbl">亮片珠光</div></div>
-        </div>
-        <div class="nav" style="margin-top:24px;"><button class="btn-back" onclick="goStep(2)">← 上一步</button><button class="btn-next" onclick="goStep(4)">下一步 →</button></div>
-      </div>
-    </div>
-    <div class="step" id="step4">
-      <div class="step-wrap">
-        <div class="s-hdr"><div class="s-num">Step 04</div><div class="s-ttl">預算</div></div>
-        <div class="slider-val" id="budgetDisplay">NT$ 1,000</div>
-        <input type="range" id="budgetSlider" min="500" max="3000" step="100" value="1000" oninput="updateBudget(this.value)">
-        <div class="slider-marks"><span>500</span><span>3,000</span></div>
-        <div class="nav" style="margin-top:28px;"><button class="btn-back" onclick="goStep(3)">← 上一步</button><button class="btn-next" onclick="goStep(5)">下一步 →</button></div>
-      </div>
-    </div>
-    <div class="step" id="step5">
-      <div class="step-wrap">
-        <div class="s-hdr"><div class="s-num">Step 05</div><div class="s-ttl">許個願望</div></div>
-        <div class="field"><label>備註 / 款式參考</label><textarea id="iWish" placeholder="告訴我妳最近想做什麼款式"></textarea></div>
-        <div class="nav"><button class="btn-back" onclick="goStep(4)">← 上一步</button><button class="btn-next" onclick="goStep(6)">確認 →</button></div>
-      </div>
-    </div>
-    <div class="step" id="step6">
-      <div class="step-wrap">
-        <div class="s-hdr"><div class="s-num">Step 06</div><div class="s-ttl">確認預約</div></div>
-        <div id="confirmContent"></div>
-        <div class="nav"><button class="btn-back" onclick="goStep(5)">← 上一步</button><button class="btn-next" onclick="submitBooking()">送出</button></div>
-      </div>
+  <div class="cs-wrap" id="csWrap" style="display:none;">
+    <div class="cs-box">
+      <div class="cs-label">Coming Soon</div>
+      <div class="cs-text">尚未開放<em>敬請期待 Ryan 的傑作</em></div>
     </div>
   </div>
-
-  <div id="successPage">
-    <div class="suc-wrap">
-      <div class="suc-label">Booking Confirmed</div>
-      <div class="suc-title">預約<br>成功</div>
-      <p class="suc-msg">已收到妳的預約，我會幫妳安排好的，到時候再通知妳</p>
-      <div class="suc-summary" id="successSummary"></div>
-    </div>
-    <div class="book-btn-wrap">
-      <button class="book-btn" onclick="backHome()">← 回到首頁</button>
-    </div>
-  </div>
+  <footer>Made by Ryan © 2025</footer>
 </div>
-
-<div class="petals" id="petals"></div>
-<div class="sending" id="sending"><div class="spinner"></div><p>送出中</p></div>
-
 <script>
-const SHEET_URL='https://script.google.com/macros/s/AKfycbwourOV2lxD0dFBHKmV5t_Vmzn4vsOskaCXnMFXRbd5LOSQJbYJ8b2NQ1QFpXwdeCTi/exec';
-const S={step:0,date:'',time:'',len:'',style:'',budget:1000,wish:''};
-let currentStamps=12;
-async function loadStamps(){
-  try{const r=await fetch(SHEET_URL+'?action=getStamps');const d=await r.json();currentStamps=d.stamps??12;}catch(e){}
-  renderStamps();
-}
-function renderStamps(){
-  const n=currentStamps,el=document.getElementById('stamps');el.innerHTML='';
-  for(let i=0;i<12;i++){const d=document.createElement('div');d.className='stamp'+(i<n?' used':'');el.appendChild(d);}
-  document.getElementById('progFill').style.width=(n/12*100)+'%';
-  document.getElementById('progTxt').textContent=n+' / 12';
-  document.getElementById('countLabel').textContent=n+' / 12';
-}
-function startBooking(){
-  if(currentStamps<=0){alert('目前沒有剩餘次數，請聯絡 Ryan');return;}
-  document.getElementById('mainView').style.display='none';
-  document.getElementById('stepsView').style.display='block';
-  document.getElementById('iDate').value=new Date().toISOString().split('T')[0];
-  goStep(1);
-}
-function cancelBooking(){document.getElementById('stepsView').style.display='none';document.getElementById('mainView').style.display='block';document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));}
-function goStep(n){
-  if(n>S.step){
-    if(S.step===1){if(!document.getElementById('iDate').value){alert('請選擇日期');return;}S.date=document.getElementById('iDate').value;S.time=document.getElementById('iTime').value;}
-    if(S.step===2&&!S.len){alert('請選擇長度');return;}
-    if(S.step===3&&!S.style){alert('請選擇款式');return;}
-    if(S.step===4)S.budget=parseInt(document.getElementById('budgetSlider').value);
-    if(S.step===5)S.wish=document.getElementById('iWish').value;
-  }
-  if(n===6)buildConfirm();
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('step'+n).classList.add('active');
-  S.step=n;window.scrollTo({top:0,behavior:'smooth'});
-}
-function pick(el,key){el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');S[key]=el.dataset.v;}
-function updateBudget(v){document.getElementById('budgetDisplay').textContent='NT$ '+parseInt(v).toLocaleString();}
-function buildConfirm(){
-  const rows=[['日期',S.date],['時間',S.time],['長度',S.len||'—'],['款式',S.style||'—'],['預算','NT$ '+S.budget.toLocaleString()],['備註',S.wish||'—']];
-  document.getElementById('confirmContent').innerHTML=rows.map(r=>`<div class="sum-row"><span class="k">${r[0]}</span><span class="v">${r[1]}</span></div>`).join('');
-}
-async function submitBooking(){
-  S.budget=parseInt(document.getElementById('budgetSlider').value);S.wish=document.getElementById('iWish').value;
-  document.getElementById('sending').classList.add('show');
-  try{await fetch(SHEET_URL,{method:'POST',body:JSON.stringify({date:S.date,time:S.time,length:S.len,style:S.style,budget:S.budget,wish:S.wish,submittedAt:new Date().toLocaleString('zh-TW')})});}catch(e){}
-  await new Promise(r=>setTimeout(r,900));
-  document.getElementById('sending').classList.remove('show');
-  document.getElementById('stepsView').style.display='none';
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  const rows=[['日期',S.date],['時間',S.time],['長度',S.len],['款式',S.style],['預算','NT$ '+S.budget.toLocaleString()],['備註',S.wish||'—']];
-  document.getElementById('successSummary').innerHTML=rows.map(r=>`<div class="sum-row"><span class="k">${r[0]}</span><span class="v">${r[1]}</span></div>`).join('');
-  document.getElementById('successPage').style.display='block';document.getElementById('successPage').classList.add('show');
-  launchPetals();window.scrollTo({top:0,behavior:'smooth'});
-}
-function backHome(){
-  document.getElementById('successPage').style.display='none';document.getElementById('successPage').classList.remove('show');
-  document.getElementById('mainView').style.display='block';S.len='';S.style='';loadStamps();
-}
-function launchPetals(){
-  const c=document.getElementById('petals');c.innerHTML='';
-  ['💅','✨','🌿','⭐','🍃'].forEach((ic,i)=>{
-    for(let j=0;j<4;j++){
-      const p=document.createElement('div');p.className='petal';p.textContent=ic;
-      p.style.left=Math.random()*100+'vw';p.style.fontSize=(10+Math.random()*12)+'px';
-      p.style.animation=`fall ${2.5+Math.random()*2}s ${i*0.1+j*0.28}s linear forwards`;
-      c.appendChild(p);
-    }
-  });
-  setTimeout(()=>c.innerHTML='',6000);
-}
-loadStamps();
+let cv=false;
+function showComing(){cv=!cv;document.getElementById('csWrap').style.display=cv?'block':'none';if(cv)document.getElementById('csWrap').scrollIntoView({behavior:'smooth',block:'center'});}
 </script>
 </body>
 </html>
