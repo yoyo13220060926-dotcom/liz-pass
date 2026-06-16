@@ -4,84 +4,127 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>集點卡系統 — Liz's Pass</title>
+<meta name="theme-color" content="#f0ebe0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-:root{--bg:#f0ebe0;--dark:#111;--mid:#555;--soft:#aaa;--line:rgba(0,0,0,0.1);}
-html,body{background:var(--bg);}
-body{min-height:100vh;font-family:-apple-system,"SF Pro Text","PingFang TC",sans-serif;display:flex;justify-content:center;}
-.wrap{width:100%;max-width:430px;}
-nav{display:flex;align-items:center;justify-content:space-between;padding:52px 24px 0;}
-.back{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dark);text-decoration:none;display:flex;align-items:center;gap:8px;}
-.nav-logo{font-size:13px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--dark);}
-.hero{padding:48px 24px 32px;}
-.hero-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:20px;}
-.hero h1{font-size:48px;font-weight:900;line-height:0.95;letter-spacing:-2px;text-transform:uppercase;color:var(--dark);margin-bottom:24px;}
-.hero-sub{font-size:13px;color:var(--mid);line-height:1.75;border-left:2px solid var(--dark);padding-left:14px;}
-.divider{height:1px;background:var(--line);margin:0 24px;}
-.section-head{padding:28px 24px 16px;}
-.section-title{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);}
-.svc-list{padding:0 24px;}
-.svc-item{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid var(--line);text-decoration:none;cursor:pointer;transition:opacity 0.15s;}
-.svc-item:active{opacity:0.6;}
-.svc-item.locked{cursor:default;}
-.svc-item.locked:active{opacity:1;}
-.svc-left{display:flex;align-items:center;gap:16px;}
-.svc-ico{font-size:22px;width:36px;text-align:center;}
-.svc-name{font-size:14px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark);margin-bottom:3px;}
-.svc-item.locked .svc-name{color:var(--soft);}
-.svc-desc{font-size:11px;color:var(--soft);}
-.svc-tag{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);padding:3px 8px;border-radius:3px;}
-.svc-arr{font-size:14px;color:var(--dark);}
-.cs-wrap{padding:24px;}
-.cs-box{border:1px solid var(--line);padding:28px 24px;text-align:center;}
-.cs-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;}
-.cs-text{font-size:16px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--dark);line-height:1.5;}
-.cs-text em{font-style:normal;display:block;font-size:11px;font-weight:600;color:var(--soft);letter-spacing:0.1em;margin-top:6px;}
-footer{padding:32px 24px;border-top:1px solid var(--line);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);}
+html{-webkit-text-size-adjust:100%;}
+body{min-height:100vh;background:#f0ebe0;color:#1c1814;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;display:flex;justify-content:center;overflow-x:hidden;}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(115% 80% at 16% -8%,#faf7ef 0%,rgba(250,247,239,0) 56%),radial-gradient(125% 95% at 108% 112%,#e8ddc9 0%,rgba(232,221,201,0) 52%),#f0ebe0;}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.wrap{position:relative;z-index:1;width:100%;max-width:430px;min-height:100vh;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes popIn{0%{opacity:0;transform:scale(.94) translateY(8px);}100%{opacity:1;transform:scale(1) translateY(0);}}
+.an{opacity:0;animation:fadeUp .8s cubic-bezier(.22,.61,.36,1) forwards;}
+
+nav{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:54px 24px 16px;background:linear-gradient(180deg,rgba(240,235,224,.9) 0%,rgba(240,235,224,.66) 68%,rgba(240,235,224,0) 100%);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);}
+.back{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1c1814;text-decoration:none;padding:6px 10px;margin:-6px -10px;border-radius:10px;transition:transform .2s;}
+.back:active{transform:scale(.94);}
+.back .a{font-size:15px;}
+.logo{font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;}
+
+.hero{padding:30px 24px 26px;}
+.hero-label{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#9b9486;margin-bottom:16px;}
+.hero h1{font-size:48px;font-weight:900;line-height:.92;letter-spacing:-2px;text-transform:uppercase;margin-bottom:16px;}
+.hero p{font-size:13px;color:#5a544a;line-height:1.7;border-left:2px solid #1c1814;padding-left:14px;}
+
+.sec{display:flex;align-items:center;justify-content:space-between;padding:6px 24px 14px;}
+.sec span:first-child{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#9b9486;}
+.sec span:last-child{font-size:10px;font-weight:700;letter-spacing:.1em;color:#c6bfb0;}
+
+.list{display:flex;flex-direction:column;gap:12px;padding:0 18px;}
+.card{display:flex;align-items:center;gap:15px;padding:17px;border-radius:21px;text-decoration:none;color:inherit;cursor:pointer;}
+.card.active{background:rgba(255,253,248,.58);backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%);border:1px solid rgba(255,255,255,.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 14px 28px -18px rgba(70,55,30,.55);transition:transform .4s cubic-bezier(.34,1.4,.64,1),box-shadow .4s;}
+.card.active:active{transform:scale(.972);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 14px -14px rgba(70,55,30,.6);}
+.card.locked{background:rgba(252,250,245,.4);border:1px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);transition:transform .35s cubic-bezier(.34,1.4,.64,1);}
+.card.locked:active{transform:scale(.985);}
+.ico{flex:0 0 auto;width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:21px;background:rgba(28,24,20,.05);border:1px solid rgba(28,24,20,.06);box-shadow:inset 0 1px 1px rgba(255,255,255,.5);}
+.card.locked .ico{filter:grayscale(.5);opacity:.6;background:rgba(28,24,20,.04);border:none;box-shadow:none;}
+.card-body{flex:1;min-width:0;}
+.card-name{font-size:14px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:3px;}
+.card.locked .card-name{color:#aaa496;}
+.card-desc{font-size:11px;color:#9b9486;letter-spacing:.02em;}
+.card.locked .card-desc{color:#bdb6a7;}
+.go{flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;background:rgba(28,24,20,.06);}
+.tag{flex:0 0 auto;font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a8a193;border:1px solid rgba(28,24,20,.12);padding:4px 9px;border-radius:99px;}
+
+.cs-wrap{padding:16px 18px 0;}
+.cs-box{border-radius:21px;padding:26px 22px;text-align:center;background:rgba(28,24,20,.035);border:1px dashed rgba(28,24,20,.16);animation:popIn .5s cubic-bezier(.34,1.56,.64,1) forwards;}
+.cs-label{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#9b9486;margin-bottom:9px;}
+.cs-title{font-size:16px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1.5;}
+.cs-sub{font-size:11px;font-weight:600;color:#9b9486;letter-spacing:.08em;margin-top:7px;}
+
+footer{padding:38px 24px 50px;margin-top:18px;}
+footer .line{height:1px;background:linear-gradient(90deg,rgba(28,24,20,.12),rgba(28,24,20,0));margin-bottom:14px;}
+footer .made{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9b9486;}
+
+@media (prefers-reduced-motion: reduce){.an,.cs-box{animation:none!important;opacity:1!important;transform:none!important;}}
 </style>
 </head>
 <body>
+<div class="bg"></div>
+<div class="grain"></div>
+
 <div class="wrap">
   <nav>
-    <a class="back" href="index.html">← 首頁</a>
-    <span class="nav-logo">LIZ</span>
+    <a class="back" href="index.html"><span class="a">←</span> 首頁</a>
+    <span class="logo">LIZ</span>
   </nav>
+
   <div class="hero">
-    <div class="hero-label">專屬集點卡系統</div>
-    <h1>選擇<br>服務</h1>
-    <p class="hero-sub">選擇你想要預約的服務，我會幫你安排好一切</p>
+    <div class="hero-label an" style="animation-delay:.04s">專屬集點卡系統</div>
+    <h1 class="an" style="animation-delay:.1s">選擇<br>服務</h1>
+    <p class="an" style="animation-delay:.16s">選擇你想要預約的服務，我會幫你安排好一切 ♥</p>
   </div>
-  <div class="divider"></div>
-  <div class="section-head"><span class="section-title">服務項目</span></div>
-  <div class="svc-list">
-    <a class="svc-item open" href="nail.html">
-      <div class="svc-left"><span class="svc-ico">💅</span><div><div class="svc-name">美甲預約</div><div class="svc-desc">專屬集點卡 · 12 次可使用</div></div></div>
-      <span class="svc-arr">→</span>
+
+  <div class="sec an" style="animation-delay:.22s">
+    <span>服務項目</span>
+    <span>04</span>
+  </div>
+
+  <div class="list">
+    <a class="card active an" style="animation-delay:.28s" href="nail.html">
+      <span class="ico">💅</span>
+      <div class="card-body">
+        <div class="card-name">美甲預約</div>
+        <div class="card-desc">專屬集點卡 · 12 次可使用</div>
+      </div>
+      <span class="go">→</span>
     </a>
-    <div class="svc-item locked" onclick="showComing()">
-      <div class="svc-left"><span class="svc-ico">💇‍♀️</span><div><div class="svc-name">美髮</div><div class="svc-desc">造型剪髮 · 染髮燙髮</div></div></div>
-      <span class="svc-tag">即將開放</span>
+    <div class="card locked an" style="animation-delay:.33s" onclick="toggleComing()">
+      <span class="ico">💇‍♀️</span>
+      <div class="card-body"><div class="card-name">美髮</div><div class="card-desc">造型剪髮 · 染髮燙髮</div></div>
+      <span class="tag">即將開放</span>
     </div>
-    <div class="svc-item locked" onclick="showComing()">
-      <div class="svc-left"><span class="svc-ico">💆‍♀️</span><div><div class="svc-name">按摩</div><div class="svc-desc">全身放鬆 · 舒壓療程</div></div></div>
-      <span class="svc-tag">即將開放</span>
+    <div class="card locked an" style="animation-delay:.38s" onclick="toggleComing()">
+      <span class="ico">💆‍♀️</span>
+      <div class="card-body"><div class="card-name">按摩</div><div class="card-desc">全身放鬆 · 舒壓療程</div></div>
+      <span class="tag">即將開放</span>
     </div>
-    <div class="svc-item locked" onclick="showComing()">
-      <div class="svc-left"><span class="svc-ico">✈️</span><div><div class="svc-name">出遊約會</div><div class="svc-desc">約會行程 · 旅遊規劃</div></div></div>
-      <span class="svc-tag">即將開放</span>
+    <div class="card locked an" style="animation-delay:.43s" onclick="toggleComing()">
+      <span class="ico">✈️</span>
+      <div class="card-body"><div class="card-name">出遊約會</div><div class="card-desc">約會行程 · 旅遊規劃</div></div>
+      <span class="tag">即將開放</span>
     </div>
   </div>
+
   <div class="cs-wrap" id="csWrap" style="display:none;">
     <div class="cs-box">
       <div class="cs-label">Coming Soon</div>
-      <div class="cs-text">尚未開放<em>敬請期待 Ryan 的傑作</em></div>
+      <div class="cs-title">尚未開放</div>
+      <div class="cs-sub">敬請期待 Ryan 的傑作</div>
     </div>
   </div>
-  <footer>Made by Ryan © 2025</footer>
+
+  <footer class="an" style="animation-delay:.5s">
+    <div class="line"></div>
+    <span class="made">Made by Ryan © 2025</span>
+  </footer>
 </div>
+
 <script>
 let cv=false;
-function showComing(){cv=!cv;document.getElementById('csWrap').style.display=cv?'block':'none';if(cv)document.getElementById('csWrap').scrollIntoView({behavior:'smooth',block:'center'});}
+function toggleComing(){cv=!cv;document.getElementById('csWrap').style.display=cv?'block':'none';}
 </script>
 </body>
 </html>

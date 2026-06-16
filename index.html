@@ -12,187 +12,164 @@
 <meta name="theme-color" content="#f0ebe0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-:root{--bg:#f0ebe0;--dark:#111;--mid:#555;--soft:#aaa;--line:rgba(0,0,0,0.1);}
-html,body{background:var(--bg);}
-body{min-height:100vh;font-family:-apple-system,"SF Pro Text","PingFang TC",sans-serif;display:flex;justify-content:center;overflow-x:hidden;}
-.wrap{width:100%;max-width:430px;}
+html{-webkit-text-size-adjust:100%;}
+body{min-height:100vh;background:#f0ebe0;color:#1c1814;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;display:flex;justify-content:center;overflow-x:hidden;}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(115% 80% at 16% -8%,#faf7ef 0%,rgba(250,247,239,0) 56%),radial-gradient(125% 95% at 108% 112%,#e8ddc9 0%,rgba(232,221,201,0) 52%),#f0ebe0;}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.wrap{position:relative;z-index:1;width:100%;max-width:430px;min-height:100vh;}
 
-/* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:52px 24px 0;}
-.nav-logo{font-size:13px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--dark);}
-.nav-menu{display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
-.nav-menu span{display:block;width:20px;height:1.5px;background:var(--dark);transition:0.2s;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes popIn{0%{opacity:0;transform:scale(.94) translateY(8px);}100%{opacity:1;transform:scale(1) translateY(0);}}
+.an{opacity:0;animation:fadeUp .8s cubic-bezier(.22,.61,.36,1) forwards;}
 
-/* DRAWER */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0);pointer-events:none;z-index:99;transition:background 0.35s;}
-.overlay.open{background:rgba(0,0,0,0.15);pointer-events:all;}
-.drawer{position:fixed;top:0;right:-100%;width:100%;max-width:320px;height:100%;background:var(--bg);z-index:100;transition:right 0.38s cubic-bezier(.77,0,.18,1);display:flex;flex-direction:column;border-left:1px solid var(--line);}
-.drawer.open{right:0;}
-.drawer-nav{display:flex;align-items:center;justify-content:space-between;padding:52px 24px 32px;}
-.drawer-logo{font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--dark);}
-.close-btn{font-size:18px;color:var(--dark);cursor:pointer;padding:4px;line-height:1;}
+nav{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:54px 24px 16px;background:linear-gradient(180deg,rgba(240,235,224,.9) 0%,rgba(240,235,224,.66) 68%,rgba(240,235,224,0) 100%);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);}
+.logo{font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;}
+.burger{display:flex;flex-direction:column;gap:5px;align-items:flex-end;cursor:pointer;padding:8px;margin:-8px;border-radius:12px;transition:transform .25s cubic-bezier(.34,1.56,.64,1);}
+.burger:active{transform:scale(.86);}
+.burger span{display:block;width:20px;height:1.6px;background:#1c1814;border-radius:2px;}
+.burger span:last-child{width:13px;}
+
+.hero{padding:26px 24px 30px;}
+.hero-label{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#9b9486;margin-bottom:18px;}
+.hero h1{font-size:55px;font-weight:900;line-height:.9;letter-spacing:-2.5px;text-transform:uppercase;margin-bottom:22px;}
+.hero p{font-size:13px;color:#5a544a;line-height:1.7;letter-spacing:.02em;border-left:2px solid #1c1814;padding-left:14px;}
+
+.sec{display:flex;align-items:center;justify-content:space-between;padding:6px 24px 14px;}
+.sec span:first-child{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#9b9486;}
+.sec span:last-child{font-size:10px;font-weight:700;letter-spacing:.1em;color:#c6bfb0;}
+
+.list{display:flex;flex-direction:column;gap:12px;padding:0 18px;}
+.card{display:flex;align-items:center;gap:15px;padding:17px;border-radius:21px;text-decoration:none;color:inherit;cursor:pointer;}
+.card.active{background:rgba(255,253,248,.58);backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%);border:1px solid rgba(255,255,255,.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 14px 28px -18px rgba(70,55,30,.55);transition:transform .4s cubic-bezier(.34,1.4,.64,1),box-shadow .4s;}
+.card.active:active{transform:scale(.972);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 14px -14px rgba(70,55,30,.6);}
+.card.locked{background:rgba(252,250,245,.4);border:1px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);transition:transform .35s cubic-bezier(.34,1.4,.64,1);}
+.card.locked:active{transform:scale(.985);}
+.ico{flex:0 0 auto;width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:21px;background:rgba(28,24,20,.05);border:1px solid rgba(28,24,20,.06);box-shadow:inset 0 1px 1px rgba(255,255,255,.5);}
+.card.locked .ico{filter:grayscale(.5);opacity:.6;background:rgba(28,24,20,.04);border:none;box-shadow:none;}
+.card-body{flex:1;min-width:0;}
+.card-name{font-size:14px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:3px;}
+.card.locked .card-name{color:#aaa496;}
+.card-desc{font-size:11px;color:#9b9486;letter-spacing:.02em;}
+.card.locked .card-desc{color:#bdb6a7;}
+.go{flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;background:rgba(28,24,20,.06);}
+.tag{flex:0 0 auto;font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a8a193;border:1px solid rgba(28,24,20,.12);padding:4px 9px;border-radius:99px;}
+
+.cs-wrap{padding:16px 18px 0;}
+.cs-box{border-radius:21px;padding:26px 22px;text-align:center;background:rgba(28,24,20,.035);border:1px dashed rgba(28,24,20,.16);animation:popIn .5s cubic-bezier(.34,1.56,.64,1) forwards;}
+.cs-label{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#9b9486;margin-bottom:9px;}
+.cs-title{font-size:16px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1.5;}
+.cs-sub{font-size:11px;font-weight:600;color:#9b9486;letter-spacing:.08em;margin-top:7px;}
+
+footer{padding:38px 24px 50px;margin-top:18px;display:flex;flex-direction:column;gap:7px;}
+footer .line{height:1px;background:linear-gradient(90deg,rgba(28,24,20,.12),rgba(28,24,20,0));margin-bottom:14px;}
+footer .made{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9b9486;}
+footer .ded{font-size:10.5px;letter-spacing:.06em;color:#b9b2a3;}
+
+.overlay{position:fixed;inset:0;z-index:90;background:rgba(20,16,10,.24);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .45s ease;}
+.overlay.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;z-index:100;height:100%;width:87%;max-width:332px;display:flex;flex-direction:column;background:rgba(243,239,230,.82);backdrop-filter:blur(28px) saturate(170%);-webkit-backdrop-filter:blur(28px) saturate(170%);border-left:1px solid rgba(255,255,255,.55);box-shadow:-34px 0 64px -32px rgba(40,30,15,.5);transform:translateX(112%);transition:transform .52s cubic-bezier(.32,.72,0,1);}
+.drawer.open{transform:translateX(0);}
+.drawer-nav{display:flex;align-items:center;justify-content:space-between;padding:54px 24px 30px;}
+.drawer-nav .logo{font-size:12px;}
+.close{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;background:rgba(28,24,20,.06);cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1);}
+.close:active{transform:scale(.85) rotate(90deg);}
 .drawer-items{flex:1;padding:0 24px;}
-.di{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid var(--line);text-decoration:none;cursor:pointer;}
-.di:last-child{border-bottom:none;}
-.di-left{display:flex;align-items:center;gap:14px;}
-.di-ico{font-size:16px;opacity:0.7;}
-.di-name{font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dark);}
-.di.active .di-name{color:var(--dark);}
-.di.locked .di-name{color:var(--soft);}
-.di-arr{font-size:12px;color:var(--soft);}
-.di-tag{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);padding:2px 8px;border-radius:3px;}
-.drawer-foot{padding:24px;border-top:1px solid var(--line);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft);}
+.di{display:flex;align-items:center;justify-content:space-between;padding:19px 0;border-bottom:1px solid rgba(28,24,20,.09);text-decoration:none;cursor:pointer;}
+.di-left{display:flex;align-items:center;gap:13px;}
+.di-left .e{font-size:15px;}
+.di-name{font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1c1814;}
+.di.locked .di-left{opacity:.55;}
+.di.locked .di-left .e{filter:grayscale(.5);}
+.di.locked .di-name{color:#9b9486;}
+.di-arr{font-size:11px;color:#9b9486;}
+.drawer-foot{padding:24px;border-top:1px solid rgba(28,24,20,.09);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9b9486;}
 
-/* HERO */
-.hero{padding:52px 24px 32px;}
-.hero-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:20px;}
-.hero h1{font-size:52px;font-weight:900;line-height:0.95;letter-spacing:-2px;text-transform:uppercase;color:var(--dark);margin-bottom:24px;}
-.hero-sub{font-size:13px;color:var(--mid);line-height:1.75;letter-spacing:0.02em;border-left:2px solid var(--dark);padding-left:14px;}
-
-/* DIVIDER */
-.divider{height:1px;background:var(--line);margin:0 24px;}
-
-/* SECTION */
-.section-head{display:flex;align-items:center;justify-content:space-between;padding:28px 24px 16px;}
-.section-title{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);}
-
-/* SERVICE LIST */
-.svc-list{padding:0 24px;}
-.svc-item{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid var(--line);text-decoration:none;cursor:pointer;transition:opacity 0.15s;}
-.svc-item:active{opacity:0.6;}
-.svc-item.locked{cursor:default;}
-.svc-item.locked:active{opacity:1;}
-.svc-left{display:flex;align-items:center;gap:16px;}
-.svc-ico{font-size:22px;width:36px;text-align:center;}
-.svc-info{}
-.svc-name{font-size:14px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark);margin-bottom:3px;}
-.svc-item.locked .svc-name{color:var(--soft);}
-.svc-desc{font-size:11px;color:var(--soft);letter-spacing:0.02em;}
-.svc-right{display:flex;align-items:center;gap:10px;}
-.svc-tag{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);padding:3px 8px;border-radius:3px;}
-.svc-arr{font-size:14px;color:var(--soft);}
-.svc-item.open .svc-arr{color:var(--dark);}
-
-/* COMING SOON */
-.cs-wrap{padding:24px;}
-.cs-box{border:1px solid var(--line);padding:28px 24px;text-align:center;}
-.cs-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;}
-.cs-text{font-size:16px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--dark);line-height:1.5;}
-.cs-text em{font-style:normal;display:block;font-size:11px;font-weight:600;color:var(--soft);letter-spacing:0.1em;margin-top:6px;}
-
-/* FOOTER */
-footer{padding:32px 24px;border-top:1px solid var(--line);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);}
+@media (prefers-reduced-motion: reduce){.an,.cs-box{animation:none!important;opacity:1!important;transform:none!important;}}
 </style>
 </head>
 <body>
-
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-<div class="drawer" id="drawer">
-  <div class="drawer-nav">
-    <span class="drawer-logo">LIZ'S PASS</span>
-    <span class="close-btn" onclick="closeMenu()">✕</span>
-  </div>
-  <div class="drawer-items">
-    <a class="di active" href="index.html">
-      <div class="di-left"><span class="di-ico">🏠</span><span class="di-name">首頁</span></div>
-      <span class="di-arr">→</span>
-    </a>
-    <a class="di" href="pass.html">
-      <div class="di-left"><span class="di-ico">💳</span><span class="di-name">集點卡系統</span></div>
-      <span class="di-arr">→</span>
-    </a>
-    <div class="di locked">
-      <div class="di-left"><span class="di-ico">🗺️</span><span class="di-name">旅遊小筆記</span></div>
-      <span class="di-tag">即將開放</span>
-    </div>
-    <div class="di locked">
-      <div class="di-left"><span class="di-ico">⚙️</span><span class="di-name">設定</span></div>
-      <span class="di-tag">即將開放</span>
-    </div>
-    <div class="di locked">
-      <div class="di-left"><span class="di-ico">✨</span><span class="di-name">更多</span></div>
-      <span class="di-tag">即將開放</span>
-    </div>
-  </div>
-  <div class="drawer-foot">Made by Ryan</div>
-</div>
+<div class="bg"></div>
+<div class="grain"></div>
 
 <div class="wrap">
   <nav>
-    <span class="nav-logo">LIZ'S PASS</span>
-    <div class="nav-menu" onclick="openMenu()"><span></span><span></span><span></span></div>
+    <span class="logo">LIZ'S PASS</span>
+    <div class="burger" onclick="openMenu()"><span></span><span></span><span></span></div>
   </nav>
 
   <div class="hero">
-    <div class="hero-label">你的專屬空間</div>
-    <h1>LIZ'S<br>PASS</h1>
-    <p class="hero-sub">選擇你想要的服務</p>
+    <div class="hero-label an" style="animation-delay:.04s">你的專屬空間</div>
+    <h1 class="an" style="animation-delay:.1s">LIZ'S<br>PASS</h1>
+    <p class="an" style="animation-delay:.16s">選擇你想要的服務</p>
   </div>
 
-  <div class="divider"></div>
-
-  <div class="section-head">
-    <span class="section-title">所有服務</span>
+  <div class="sec an" style="animation-delay:.22s">
+    <span>所有服務</span>
+    <span>04</span>
   </div>
 
-  <div class="svc-list">
-    <a class="svc-item open" href="pass.html">
-      <div class="svc-left">
-        <span class="svc-ico">💳</span>
-        <div class="svc-info">
-          <div class="svc-name">集點卡系統</div>
-          <div class="svc-desc">美甲 · 美髮 · 按摩 · 出遊</div>
-        </div>
+  <div class="list">
+    <a class="card active an" style="animation-delay:.28s" href="pass.html">
+      <span class="ico">💳</span>
+      <div class="card-body">
+        <div class="card-name">集點卡系統</div>
+        <div class="card-desc">美甲 · 美髮 · 按摩 · 出遊</div>
       </div>
-      <span class="svc-arr">→</span>
+      <span class="go">→</span>
     </a>
-    <div class="svc-item locked" onclick="showComing()">
-      <div class="svc-left">
-        <span class="svc-ico">🗺️</span>
-        <div class="svc-info">
-          <div class="svc-name">旅遊小筆記</div>
-          <div class="svc-desc">行程規劃 · 旅遊路線</div>
-        </div>
-      </div>
-      <span class="svc-tag">即將開放</span>
+    <div class="card locked an" style="animation-delay:.33s" onclick="toggleComing()">
+      <span class="ico">🗺️</span>
+      <div class="card-body"><div class="card-name">旅遊小筆記</div><div class="card-desc">行程規劃 · 旅遊路線</div></div>
+      <span class="tag">即將開放</span>
     </div>
-    <div class="svc-item locked" onclick="showComing()">
-      <div class="svc-left">
-        <span class="svc-ico">⚙️</span>
-        <div class="svc-info">
-          <div class="svc-name">設定</div>
-          <div class="svc-desc">個人設定 · 通知管理</div>
-        </div>
-      </div>
-      <span class="svc-tag">即將開放</span>
+    <div class="card locked an" style="animation-delay:.38s" onclick="toggleComing()">
+      <span class="ico">⚙️</span>
+      <div class="card-body"><div class="card-name">設定</div><div class="card-desc">個人設定 · 通知管理</div></div>
+      <span class="tag">即將開放</span>
     </div>
-    <div class="svc-item locked" onclick="showComing()">
-      <div class="svc-left">
-        <span class="svc-ico">✨</span>
-        <div class="svc-info">
-          <div class="svc-name">更多</div>
-          <div class="svc-desc">Ryan 的下一個傑作</div>
-        </div>
-      </div>
-      <span class="svc-tag">即將開放</span>
+    <div class="card locked an" style="animation-delay:.43s" onclick="toggleComing()">
+      <span class="ico">✨</span>
+      <div class="card-body"><div class="card-name">更多</div><div class="card-desc">Ryan 的下一個傑作</div></div>
+      <span class="tag">即將開放</span>
     </div>
   </div>
 
   <div class="cs-wrap" id="csWrap" style="display:none;">
     <div class="cs-box">
       <div class="cs-label">Coming Soon</div>
-      <div class="cs-text">尚未開放<em>敬請期待 Ryan 的傑作</em></div>
+      <div class="cs-title">尚未開放</div>
+      <div class="cs-sub">敬請期待 Ryan 的傑作</div>
     </div>
   </div>
 
-  <footer>Made by Ryan © 2025</footer>
+  <footer class="an" style="animation-delay:.5s">
+    <div class="line"></div>
+    <span class="made">Made by Ryan © 2025</span>
+    <span class="ded">為 Liz 親手打造 ♥</span>
+  </footer>
 </div>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-nav">
+    <span class="logo">LIZ'S PASS</span>
+    <span class="close" onclick="closeMenu()">✕</span>
+  </div>
+  <div class="drawer-items">
+    <a class="di" href="index.html"><span class="di-left"><span class="e">🏠</span><span class="di-name">首頁</span></span><span class="di-arr">→</span></a>
+    <a class="di" href="pass.html"><span class="di-left"><span class="e">💳</span><span class="di-name">集點卡系統</span></span><span class="di-arr">→</span></a>
+    <div class="di locked"><span class="di-left"><span class="e">🗺️</span><span class="di-name">旅遊小筆記</span></span><span class="tag">即將開放</span></div>
+    <div class="di locked"><span class="di-left"><span class="e">⚙️</span><span class="di-name">設定</span></span><span class="tag">即將開放</span></div>
+    <div class="di locked"><span class="di-left"><span class="e">✨</span><span class="di-name">更多</span></span><span class="tag">即將開放</span></div>
+  </div>
+  <div class="drawer-foot">Made by Ryan</div>
+</aside>
 
 <script>
 function openMenu(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden';}
 function closeMenu(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('open');document.body.style.overflow='';}
 let cv=false;
-function showComing(){cv=!cv;document.getElementById('csWrap').style.display=cv?'block':'none';if(cv)document.getElementById('csWrap').scrollIntoView({behavior:'smooth',block:'center'});}
+function toggleComing(){cv=!cv;document.getElementById('csWrap').style.display=cv?'block':'none';}
 </script>
 </body>
 </html>
